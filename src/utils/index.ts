@@ -18,4 +18,4 @@ export function deleteNamespace(scriptString: string): string {
     .replace(/(.*?)_.*\.FREQUENCIES(.*)/g, '$1FREQUENCIES$2')
     .replace(/(.*?)_.*\.PRESETS(.*)/g, '$1PRESETS$2')
     .replace(/(.*= new) .*Knob/g, '$1 Knob');
-};
+}

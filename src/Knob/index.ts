@@ -3,7 +3,7 @@ export class Knob {
   private context: CanvasRenderingContext2D;
 
   constructor(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D) {
-    this.canvas  = canvas;
+    this.canvas = canvas;
     this.context = context;
   }
 
@@ -12,7 +12,7 @@ export class Knob {
 
     this.context.fillStyle = '#fdfdfd';
     this.context.beginPath();
-    this.context.arc(x, y, radius, 0, (2 * Math.PI), true);
+    this.context.arc(x, y, radius, 0, 2 * Math.PI, true);
     this.context.fill();
   }
 
@@ -32,12 +32,12 @@ export class Knob {
     const offset = 24;
 
     this.context.fillStyle = '#fdfdfd';
-    this.context.fillRect(x, h, 1, (0 - (h - offset)));
+    this.context.fillRect(x, h, 1, 0 - (h - offset));
     this.context.fillRect(0, y, w, 1);
 
     const fontSize = 16;
 
-    this.context.font      = `${fontSize}px 'Lato'`;
+    this.context.font = `${fontSize}px 'Lato'`;
     this.context.fillStyle = '#fdfdfd';
     this.context.textAlign = 'center';
     this.context.fillText(text, x, fontSize);

@@ -10,11 +10,11 @@ export const scriptContainer = () => {
 
     const visualizerCanvasId = 'visualizer-canvas';
     const controllerCanvasId = 'controller-canvas';
-    const selectPresetId     = 'select-preset';
+    const selectPresetId = 'select-preset';
 
     const visualizerCanvas = document.getElementById(visualizerCanvasId);
     const controllerCanvas = document.getElementById(controllerCanvasId);
-    const select           = document.getElementById(selectPresetId);
+    const select = document.getElementById(selectPresetId);
 
     if (visualizerCanvas && controllerCanvas && select) {
       if (visualizerCanvas.hasAttribute('hidden')) {
@@ -49,7 +49,7 @@ export const scriptContainer = () => {
 
           const visualizerCanvas = document.createElement('canvas');
           const controllerCanvas = document.createElement('canvas');
-          const select           = document.createElement('select');
+          const select = document.createElement('select');
 
           const context = controllerCanvas.getContext('2d');
 
@@ -59,15 +59,16 @@ export const scriptContainer = () => {
 
           const equalizer = new GraphicEqualizer(window.X.get());
 
-          window.X('media')
+          window
+            .X('media')
             .setup({
-              media   : video,
+              media: video,
               autoplay: true
             })
             .install('graphicequalizer', equalizer);
 
           // for Visualizer
-          visualizerCanvas.width  = window.innerWidth;
+          visualizerCanvas.width = window.innerWidth;
           visualizerCanvas.height = window.innerHeight;
 
           visualizerCanvas.setAttribute('id', visualizerCanvasId);
@@ -76,61 +77,62 @@ export const scriptContainer = () => {
 
           const knob = new Knob(controllerCanvas, context);
 
-          window.X('media')
+          window
+            .X('media')
             .module('analyser')
             .domain('fft')
             .setup(visualizerCanvas)
             .activate()
             .param({
               interval: -1,
-              scale   : 'linear',
-              styles  : {
-                shape : 'rect',
+              scale: 'linear',
+              styles: {
+                shape: 'rect',
                 gradients: [
                   { offset: 0, color: 'rgba(255, 0, 0, 0.0)' },
                   { offset: 1, color: 'rgba(255, 0, 0, 1.0)' }
                 ],
-                width : 1,
-                grid  : 'none',
-                text  : 'none',
-                top   : 0,
-                right : 0,
+                width: 1,
+                grid: 'none',
+                text: 'none',
+                top: 0,
+                right: 0,
                 bottom: 0,
-                left  : 0
+                left: 0
               }
             });
 
           // for Graphic Equalizer
-          controllerCanvas.width  = window.innerWidth;
+          controllerCanvas.width = window.innerWidth;
           controllerCanvas.height = window.innerHeight;
 
           controllerCanvas.setAttribute('id', controllerCanvasId);
 
           document.body.appendChild(controllerCanvas);
 
-          const middle      = Math.trunc(controllerCanvas.height / 2);
-          const fftSize     = window.X('media').module('analyser').param('fftSize');
-          const fsDivN      = window.X.SAMPLE_RATE / fftSize;
-          const drawnSize   = window.X('media').module('analyser').domain('fft').param('size');
-          const f125        = FREQUENCIES[0] / fsDivN;
-          const f250        = FREQUENCIES[1] / fsDivN;
-          const f500        = FREQUENCIES[2] / fsDivN;
-          const f1000       = FREQUENCIES[3] / fsDivN;
-          const f2000       = FREQUENCIES[4] / fsDivN;
-          const f4000       = FREQUENCIES[5] / fsDivN;
+          const middle = Math.trunc(controllerCanvas.height / 2);
+          const fftSize = window.X('media').module('analyser').param('fftSize');
+          const fsDivN = window.X.SAMPLE_RATE / fftSize;
+          const drawnSize = window.X('media').module('analyser').domain('fft').param('size');
+          const f125 = FREQUENCIES[0] / fsDivN;
+          const f250 = FREQUENCIES[1] / fsDivN;
+          const f500 = FREQUENCIES[2] / fsDivN;
+          const f1000 = FREQUENCIES[3] / fsDivN;
+          const f2000 = FREQUENCIES[4] / fsDivN;
+          const f4000 = FREQUENCIES[5] / fsDivN;
           // const f8000       = FREQUENCIES[6] / fsDivN;
           const widthOfRect = controllerCanvas.width / drawnSize;
 
-          const f125X  = Math.trunc(widthOfRect * f125);
-          const f250X  = Math.trunc(widthOfRect * f250);
-          const f500X  = Math.trunc(widthOfRect * f500);
+          const f125X = Math.trunc(widthOfRect * f125);
+          const f250X = Math.trunc(widthOfRect * f250);
+          const f500X = Math.trunc(widthOfRect * f500);
           const f1000X = Math.trunc(widthOfRect * f1000);
           const f2000X = Math.trunc(widthOfRect * f2000);
           const f4000X = Math.trunc(widthOfRect * f4000);
 
-          let f125Y  = middle;
-          let f250Y  = middle;
-          let f500Y  = middle;
+          let f125Y = middle;
+          let f250Y = middle;
+          let f500Y = middle;
           let f1000Y = middle;
           let f2000Y = middle;
           let f4000Y = middle;
@@ -151,8 +153,8 @@ export const scriptContainer = () => {
             const h = controllerCanvas.height;
 
             const maxdB = 24;
-            const rate  = (middle - y) / middle;
-            const dB    = rate * maxdB;
+            const rate = (middle - y) / middle;
+            const dB = rate * maxdB;
 
             const className = 'on-controller';
 
@@ -177,7 +179,7 @@ export const scriptContainer = () => {
 
                 f125Y = y;
 
-                equalizer.param(FREQUENCIES[0], (2 * dB));
+                equalizer.param(FREQUENCIES[0], 2 * dB);
               }
             }
 
@@ -303,12 +305,12 @@ export const scriptContainer = () => {
           controllerCanvas.addEventListener('mouseup', onMouseup, false);
 
           const onResize = () => {
-            const { innerWidth : width, innerHeight : height } = window;
+            const { innerWidth: width, innerHeight: height } = window;
 
-            visualizerCanvas.width  = width;
+            visualizerCanvas.width = width;
             visualizerCanvas.height = height;
 
-            controllerCanvas.width  = width;
+            controllerCanvas.width = width;
             controllerCanvas.height = height;
 
             window.removeEventListener('resize', onResize, false);
@@ -323,7 +325,7 @@ export const scriptContainer = () => {
           Object.keys(PRESETS).forEach((presetName: string) => {
             const option = document.createElement('option');
 
-            option.value       = presetName;
+            option.value = presetName;
             option.textContent = presetName.toUpperCase();
 
             fragment.appendChild(option);
@@ -344,7 +346,7 @@ export const scriptContainer = () => {
               equalizer.param(FREQUENCIES[i], presetValues[i]);
 
               const maxdB = 18;
-              const y     = (0 - ((presetValues[i] / maxdB) * middle)) + middle;
+              const y = 0 - (presetValues[i] / maxdB) * middle + middle;
 
               switch (i) {
                 case 0:

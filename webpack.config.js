@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
-const path                 = require('path');
+const path = require('path');
 /* eslint-enable @typescript-eslint/no-var-requires */
 
 const dirname = path.resolve('.');
@@ -37,10 +37,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [
-          MiniCSSExtractPlugin.loader,
-          'css-loader'
-        ]
+        use: [MiniCSSExtractPlugin.loader, 'css-loader']
       }
     ]
   },
