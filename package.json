@@ -21,6 +21,21 @@
     "test:coverage": "jest --coverage",
     "test:verbose": "jest --verbose"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write 'src/**/*.{ts,tsx}'"
+    ],
+    "src/**/*.css": [
+      "stylelint --fix",
+      "prettier --write 'src/**/*.css'"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Korilakkuma/X-EQUALIZER.git"
