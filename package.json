@@ -1,0 +1,71 @@
+{
+  "name": "x-equalizer",
+  "version": "0.0.0",
+  "engines": {
+    "node": ">=18.0.0 <=20.12.x"
+  },
+  "description": "Chrome extension and Firefox addon for Graphic Equalizer",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "eslint": "eslint 'src/**/*.ts'",
+    "stylelint": "stylelint 'src/**/*.css'",
+    "fix:eslint": "eslint --fix 'src/**/*.ts'",
+    "fix:stylelint": "stylelint --fix 'src/**/*.css'",
+    "format:check": "prettier --check 'src/**/*.{ts,js,css}'",
+    "format": "prettier --write 'src/**/*.{ts,js,css}'",
+    "lint": "run-p eslint stylelint",
+    "fix": "run-p fix:eslint fix:stylelint",
+    "type": "tsc --noEmit",
+    "build": "npm run clean && tsc && cp src/main.js dist/main.js && cp src/styles/app.css dist/app.css",
+    "test": "echo 'No test cases.'"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.ts": [
+      "eslint --fix",
+      "prettier --write 'src/**/*.{ts,js}'"
+    ],
+    "src/**/*.css": [
+      "stylelint --fix",
+      "prettier --write 'src/**/*.css'"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Korilakkuma/X-EQUALIZER.git"
+  },
+  "keywords": [
+    "Chrome extension",
+    "Firefox addon",
+    "Graphic Equalizer",
+    "Web Audio API",
+    "XSound"
+  ],
+  "author": "Korilakkuma <rilakkuma.san.xjapan@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Korilakkuma/X-EQUALIZER/issues"
+  },
+  "homepage": "https://github.com/Korilakkuma/X-EQUALIZER",
+  "dependencies": {
+    "xsound": "^3.8.3"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.266",
+    "@types/firefox-webext-browser": "^120.0.3",
+    "eslint": "^8.57.0",
+    "husky": "4.3.8",
+    "lint-staged": "^15.2.2",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^3.2.5",
+    "stylelint": "^16.3.1",
+    "stylelint-config-recess-order": "^5.0.0",
+    "stylelint-config-standard": "^36.0.0",
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^7.6.0"
+  }
+}
