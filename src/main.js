@@ -1,22 +1,28 @@
 (() => {
-  const FREQUENCIES = [125, 250, 500, 1000, 2000, 4000, 8000];
+  const FREQUENCIES = [62.5, 125, 250, 500, 1000, 2000, 4000, 8000, 16000];
 
   const PRESETS = {
-    flat: [0, 0, 0, 0, 0, 0],
-    perfect: [9, 7, 6, 5, 7, 9],
-    explosion: [9, 7, 6, 5, 7, 4],
-    acoustic: [5, 1, 2, 3, 4, 2],
-    bassbooster: [3, 2, 1, 0, 0, 0],
-    bassreducer: [-4, -3, -1, 0, 0, 0],
-    deep: [2, 1, 3, 2, 1, -2],
-    hiphop: [2, 3, -2, -2, 2, -1],
-    latin: [0, 0, -2, -2, -2, 0],
-    loudness: [0, 0, -2, 0, -1, -5],
-    lounge: [-1, -2, 4, 2, 0, -2],
-    piano: [0, 2, 3, 1, 3, 4],
-    rb: [6, 2, -3, -2, 2, 3],
-    treblebooster: [0, 0, 0, 1, 3, 4],
-    treblereducer: [0, 0, 0, -2, -3, -4]
+    flat: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    acoustic: [6, 5, 1, 3, 2, 4, 5, 4, 2],
+    bassbooster: [5, 3, 2, 1, 0, 0, 0, 0, 0],
+    bassreducer: [-5, -3, -2, -1, 0, 0, 0, 0, 0],
+    classical: [4, 3, 2, -1, -1, 0, 2, 3, 4],
+    dance: [7, 6, 0, 2, 4, 6, 5, 4, 0],
+    deep: [3, 2, 0, 3, 2, 1, -2, -4, -6],
+    electronic: [5, 1, 0, -2, 2, 1, 1, 2, 6],
+    hiphop: [5, 2, 3, -2, -2, 2, -1, 2, 3],
+    latin: [3, 0, 0, -2, -2, -2, 0, 3, 5],
+    loudness: [5, 0, 0, -2, 0, -1, -6, 6, 2],
+    lounge: [-1, 0, 2, 5, 3, 0, -2, 2, 1],
+    piano: [2, 0, 2, 3, 1, 3, 5, 3, 4],
+    pop: [-1, 0, 2, 5, 5, 2, 0, -1, -2],
+    rb: [7, 6, 2, -3, -1, 3, 3, 3, 4],
+    rock: [5, 3, 2, -1, -2, 0, 3, 4, 5],
+    treblebooster: [0, 0, 0, 0, 1, 2, 3, 5, 6],
+    treblereducer: [0, 0, 0, 0, -1, -2, -3, -5, -6],
+    vocalbooster: [-3, -3, 2, 5, 5, 3, 2, 0, -2]
+    // perfect      : [ 9,  7,  6,  5,  7,  9],
+    // explosion    : [ 9,  7,  6,  5,  7,  4],
   };
 
   class GraphicEqualizer extends X.Effector {
@@ -32,7 +38,7 @@
         this.filters[i] = this.context.createBiquadFilter();
         this.filters[i].type = 'peaking';
         this.filters[i].frequency.value = FREQUENCIES[i];
-        this.filters[i].Q.value = 2;
+        this.filters[i].Q.value = Math.SQRT1_2;
         this.filters[i].gain.value = 0;
       }
 
@@ -65,13 +71,15 @@
     /** @override */
     params() {
       return {
-        125: this.filters[0].gain.value,
-        250: this.filters[1].gain.value,
-        500: this.filters[2].gain.value,
-        1000: this.filters[3].gain.value,
-        2000: this.filters[4].gain.value,
-        4000: this.filters[5].gain.value,
-        8000: this.filters[6].gain.value
+        62: this.filters[0].gain.value,
+        125: this.filters[1].gain.value,
+        250: this.filters[2].gain.value,
+        500: this.filters[3].gain.value,
+        1000: this.filters[4].gain.value,
+        2000: this.filters[5].gain.value,
+        4000: this.filters[6].gain.value,
+        8000: this.filters[7].gain.value,
+        16000: this.filters[8].gain.value
       };
     }
   }
