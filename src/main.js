@@ -19,6 +19,9 @@
     treblereducer: [0, 0, 0, -2, -3, -4]
   };
 
+  const MIN_FREQUENCY = 20;
+  const MAX_FREQUENCY = 20000;
+
   class GraphicEqualizer extends X.Effector {
     filters = [];
 
@@ -219,13 +222,15 @@
           const fsDivN = X.SAMPLE_RATE / fftSize;
           const drawnSize = X('media').module('analyser').domain('fft').param('size');
 
-          const f125 = FREQUENCIES[0] / fsDivN;
-          const f250 = FREQUENCIES[1] / fsDivN;
-          const f500 = FREQUENCIES[2] / fsDivN;
-          const f1000 = FREQUENCIES[3] / fsDivN;
-          const f2000 = FREQUENCIES[4] / fsDivN;
-          const f4000 = FREQUENCIES[5] / fsDivN;
-          // const f8000       = FREQUENCIES[6] / fsDivN;
+          const f62 = Math.log10(FREQUENCIES[0] / MIN_FREQUENCY) / Math.log10(MAX_FREQUENCY / MIN_FREQUENCY);
+          const f125 = Math.log10(FREQUENCIES[1] / MIN_FREQUENCY) / Math.log10(MAX_FREQUENCY / MIN_FREQUENCY);
+          const f250 = Math.log10(FREQUENCIES[2] / MIN_FREQUENCY) / Math.log10(MAX_FREQUENCY / MIN_FREQUENCY);
+          const f500 = Math.log10(FREQUENCIES[3] / MIN_FREQUENCY) / Math.log10(MAX_FREQUENCY / MIN_FREQUENCY);
+          const f1000 = Math.log10(FREQUENCIES[4] / MIN_FREQUENCY) / Math.log10(MAX_FREQUENCY / MIN_FREQUENCY);
+          const f2000 = Math.log10(FREQUENCIES[5] / MIN_FREQUENCY) / Math.log10(MAX_FREQUENCY / MIN_FREQUENCY);
+          const f4000 = Math.log10(FREQUENCIES[6] / MIN_FREQUENCY) / Math.log10(MAX_FREQUENCY / MIN_FREQUENCY);
+          const f8000 = Math.log10(FREQUENCIES[7] / MIN_FREQUENCY) / Math.log10(MAX_FREQUENCY / MIN_FREQUENCY);
+          const f16000 = Math.log10(FREQUENCIES[8] / MIN_FREQUENCY) / Math.log10(MAX_FREQUENCY / MIN_FREQUENCY);
 
           const widthOfRect = controllerCanvas.width / drawnSize;
 
