@@ -25,6 +25,9 @@
     // explosion    : [ 9,  7,  6,  5,  7,  4],
   };
 
+  const MIN_FREQUENCY = 20;
+  const MAX_FREQUENCY = 20000;
+
   class GraphicEqualizer extends X.Effector {
     filters = [];
 
@@ -196,7 +199,7 @@
             .activate()
             .param({
               interval: -1,
-              scale: 'linear',
+              scale: 'logarithmic',
               styles: {
                 shape: 'rect',
                 gradients: [
@@ -222,32 +225,42 @@
 
           const middle = Math.trunc(controllerCanvas.height / 2);
           const fftSize = X('media').module('analyser').param('fftSize');
-          const fsDivN = X.SAMPLE_RATE / fftSize;
+          const frequencyResolution = X.SAMPLE_RATE / fftSize;
           const drawnSize = X('media').module('analyser').domain('fft').param('size');
 
-          const f125 = FREQUENCIES[0] / fsDivN;
-          const f250 = FREQUENCIES[1] / fsDivN;
-          const f500 = FREQUENCIES[2] / fsDivN;
-          const f1000 = FREQUENCIES[3] / fsDivN;
-          const f2000 = FREQUENCIES[4] / fsDivN;
-          const f4000 = FREQUENCIES[5] / fsDivN;
-          // const f8000       = FREQUENCIES[6] / fsDivN;
+          const base = Math.log10(MAX_FREQUENCY / MIN_FREQUENCY);
 
-          const widthOfRect = controllerCanvas.width / drawnSize;
+          const f62 = Math.log10(FREQUENCIES[0] / MIN_FREQUENCY) / base;
+          const f125 = Math.log10(FREQUENCIES[1] / MIN_FREQUENCY) / base;
+          const f250 = Math.log10(FREQUENCIES[2] / MIN_FREQUENCY) / base;
+          const f500 = Math.log10(FREQUENCIES[3] / MIN_FREQUENCY) / base;
+          const f1000 = Math.log10(FREQUENCIES[4] / MIN_FREQUENCY) / base;
+          const f2000 = Math.log10(FREQUENCIES[5] / MIN_FREQUENCY) / base;
+          const f4000 = Math.log10(FREQUENCIES[6] / MIN_FREQUENCY) / base;
+          const f8000 = Math.log10(FREQUENCIES[7] / MIN_FREQUENCY) / base;
+          const f16000 = Math.log10(FREQUENCIES[8] / MIN_FREQUENCY) / base;
 
-          const f125X = Math.trunc(widthOfRect * f125);
-          const f250X = Math.trunc(widthOfRect * f250);
-          const f500X = Math.trunc(widthOfRect * f500);
-          const f1000X = Math.trunc(widthOfRect * f1000);
-          const f2000X = Math.trunc(widthOfRect * f2000);
-          const f4000X = Math.trunc(widthOfRect * f4000);
+          const widthOfRect = window.innerWidth / (FREQUENCIES.length + 1);
 
+          const f62X = Math.trunc(1 * widthOfRect);
+          const f125X = Math.trunc(2 * widthOfRect);
+          const f250X = Math.trunc(3 * widthOfRect);
+          const f500X = Math.trunc(4 * widthOfRect);
+          const f1000X = Math.trunc(5 * widthOfRect);
+          const f2000X = Math.trunc(6 * widthOfRect);
+          const f4000X = Math.trunc(7 * widthOfRect);
+          const f8000X = Math.trunc(8 * widthOfRect);
+          const f16000X = Math.trunc(9 * widthOfRect);
+
+          let f62Y = middle;
           let f125Y = middle;
           let f250Y = middle;
           let f500Y = middle;
           let f1000Y = middle;
           let f2000Y = middle;
           let f4000Y = middle;
+          let f8000Y = middle;
+          let f16000Y = middle;
 
           let isMouseDown = false;
 
@@ -274,30 +287,49 @@
             context.clearRect(0, 0, w, h);
 
             // Draw controllers
-            // 125 Hz
-            knob.drawLine(0, middle, f125X, f125Y);
-            knob.drawCircle(f125X, f125Y, false);
+            // 62.5 Hz
+            knob.drawLine(0, middle, f62X, f62Y);
+            knob.drawCircle(f62X, f62Y, false);
 
             if (context.isPointInPath(x, y)) {
               controllerCanvas.classList.add(className);
               knob.drawCross(`${FREQUENCIES[0]} Hz ${Math.trunc(dB)} dB`, x, y);
 
               if (isMouseDown) {
-                knob.drawLine(0, middle, f125X, y);
-                knob.drawCircle(f125X, y, true);
+                knob.drawLine(0, middle, f62X, y);
+                knob.drawCircle(f62X, y, true);
 
-                f125Y = y;
+                f62Y = y;
 
                 equalizer.param(FREQUENCIES[0], 2 * dB);
               }
             }
+
+            // 125 Hz
+            knob.drawLine(f62X, f62Y, f125X, f125Y);
+            knob.drawCircle(f125X, f125Y, false);
+
+            if (context.isPointInPath(x, y)) {
+              controllerCanvas.classList.add(className);
+              knob.drawCross(`${FREQUENCIES[1]} Hz ${Math.trunc(dB)} dB`, x, y);
+
+              if (isMouseDown) {
+                knob.drawLine(f62X, f62Y, f125X, y);
+                knob.drawCircle(f125X, y, true);
+
+                f125Y = y;
+
+                equalizer.param(FREQUENCIES[1], dB);
+              }
+            }
+
             // 250 Hz
             knob.drawLine(f125X, f125Y, f250X, f250Y);
             knob.drawCircle(f250X, f250Y, false);
 
             if (context.isPointInPath(x, y)) {
               controllerCanvas.classList.add(className);
-              knob.drawCross(`${FREQUENCIES[1]} Hz ${Math.trunc(dB)} dB`, x, y);
+              knob.drawCross(`${FREQUENCIES[2]} Hz ${Math.trunc(dB)} dB`, x, y);
 
               if (isMouseDown) {
                 knob.drawLine(f125X, f125Y, f250X, y);
@@ -305,7 +337,7 @@
 
                 f250Y = y;
 
-                equalizer.param(FREQUENCIES[1], dB);
+                equalizer.param(FREQUENCIES[2], dB);
               }
             }
 
@@ -315,7 +347,7 @@
 
             if (context.isPointInPath(x, y)) {
               controllerCanvas.classList.add(className);
-              knob.drawCross(`${FREQUENCIES[2]} Hz ${Math.trunc(dB)} dB`, x, y);
+              knob.drawCross(`${FREQUENCIES[3]} Hz ${Math.trunc(dB)} dB`, x, y);
 
               if (isMouseDown) {
                 knob.drawLine(f250X, f250Y, f500X, y);
@@ -323,16 +355,17 @@
 
                 f500Y = y;
 
-                equalizer.param(FREQUENCIES[2], dB);
+                equalizer.param(FREQUENCIES[3], dB);
               }
             }
+
             // 1000 Hz
             knob.drawLine(f500X, f500Y, f1000X, f1000Y);
             knob.drawCircle(f1000X, f1000Y, false);
 
             if (context.isPointInPath(x, y)) {
               controllerCanvas.classList.add(className);
-              knob.drawCross(`${FREQUENCIES[3]} Hz ${Math.trunc(dB)} dB`, x, y);
+              knob.drawCross(`${FREQUENCIES[4]} Hz ${Math.trunc(dB)} dB`, x, y);
 
               if (isMouseDown) {
                 knob.drawLine(f500X, f500Y, f1000X, y);
@@ -340,7 +373,7 @@
 
                 f1000Y = y;
 
-                equalizer.param(FREQUENCIES[3], dB);
+                equalizer.param(FREQUENCIES[4], dB);
               }
             }
 
@@ -350,7 +383,7 @@
 
             if (context.isPointInPath(x, y)) {
               controllerCanvas.classList.add(className);
-              knob.drawCross(`${FREQUENCIES[4]} Hz ${Math.trunc(dB)} dB`, x, y);
+              knob.drawCross(`${FREQUENCIES[5]} Hz ${Math.trunc(dB)} dB`, x, y);
 
               if (isMouseDown) {
                 knob.drawLine(f1000X, f1000Y, f2000X, y);
@@ -358,7 +391,7 @@
 
                 f2000Y = y;
 
-                equalizer.param(FREQUENCIES[4], dB);
+                equalizer.param(FREQUENCIES[5], dB);
               }
             }
 
@@ -368,7 +401,7 @@
 
             if (context.isPointInPath(x, y)) {
               controllerCanvas.classList.add(className);
-              knob.drawCross(`${FREQUENCIES[5]} Hz ${Math.trunc(dB)} dB`, x, y);
+              knob.drawCross(`${FREQUENCIES[6]} Hz ${Math.trunc(dB)} dB`, x, y);
 
               if (isMouseDown) {
                 knob.drawLine(f2000X, f2000Y, f4000X, y);
@@ -376,30 +409,71 @@
 
                 f4000Y = y;
 
-                equalizer.param(FREQUENCIES[5], dB);
+                equalizer.param(FREQUENCIES[6], dB);
               }
             }
 
-            knob.drawLine(f4000X, f4000Y, controllerCanvas.width, middle);
+            // 8000 Hz
+            knob.drawLine(f4000X, f4000Y, f8000X, f8000Y);
+            knob.drawCircle(f8000X, f8000Y, false);
+
+            if (context.isPointInPath(x, y)) {
+              controllerCanvas.classList.add(className);
+              knob.drawCross(`${FREQUENCIES[7]} Hz ${Math.trunc(dB)} dB`, x, y);
+
+              if (isMouseDown) {
+                knob.drawLine(f4000X, f4000Y, f8000X, y);
+                knob.drawCircle(f8000X, y, true);
+
+                f8000Y = y;
+
+                equalizer.param(FREQUENCIES[7], dB);
+              }
+            }
+
+            // 16000 Hz
+            knob.drawLine(f8000X, f8000Y, f16000X, f16000Y);
+            knob.drawCircle(f16000X, f16000Y, false);
+
+            if (context.isPointInPath(x, y)) {
+              controllerCanvas.classList.add(className);
+              knob.drawCross(`${FREQUENCIES[8]} Hz ${Math.trunc(dB)} dB`, x, y);
+
+              if (isMouseDown) {
+                knob.drawLine(f8000X, f8000Y, f16000X, y);
+                knob.drawCircle(f16000X, y, true);
+
+                f16000Y = y;
+
+                equalizer.param(FREQUENCIES[8], dB);
+              }
+            }
+
+            knob.drawLine(f16000X, f16000Y, window.innerWidth, middle);
           };
 
           const onMouseup = () => {
             isMouseDown = false;
           };
 
-          knob.drawLine(0, f125Y, f125X, f125Y);
-          knob.drawLine(f125X, f250Y, f250X, f250Y);
-          knob.drawLine(f250X, f500Y, f500X, f500Y);
-          knob.drawLine(f500X, f1000Y, f1000X, f1000Y);
-          knob.drawLine(f1000X, f2000Y, f2000X, f2000Y);
-          knob.drawLine(f2000X, f4000Y, f4000X, f4000Y);
-          knob.drawLine(f4000X, middle, controllerCanvas.width, middle);
+          knob.drawLine(0, f62Y, f125X, f125Y);
+          knob.drawLine(f125X, f125Y, f250X, f250Y);
+          knob.drawLine(f250X, f250Y, f500X, f500Y);
+          knob.drawLine(f500X, f500Y, f1000X, f1000Y);
+          knob.drawLine(f1000X, f1000Y, f2000X, f2000Y);
+          knob.drawLine(f2000X, f2000Y, f4000X, f4000Y);
+          knob.drawLine(f4000X, f4000Y, f8000X, f8000Y);
+          knob.drawLine(f16000X, middle, window.innerWidth, middle);
+
+          knob.drawCircle(f62X, f62Y, false);
           knob.drawCircle(f125X, f125Y, false);
           knob.drawCircle(f250X, f250Y, false);
           knob.drawCircle(f500X, f500Y, false);
           knob.drawCircle(f1000X, f1000Y, false);
           knob.drawCircle(f2000X, f2000Y, false);
           knob.drawCircle(f4000X, f4000Y, false);
+          knob.drawCircle(f8000X, f8000Y, false);
+          knob.drawCircle(f16000X, f16000Y, false);
 
           controllerCanvas.addEventListener('mousedown', onMousedown, false);
           controllerCanvas.addEventListener('mousemove', onMousemove, true);
@@ -448,22 +522,31 @@
 
               switch (i) {
                 case 0:
-                  f125Y = y;
+                  f62Y = y;
                   break;
                 case 1:
-                  f250Y = y;
+                  f125Y = y;
                   break;
                 case 2:
-                  f500Y = y;
+                  f250Y = y;
                   break;
                 case 3:
-                  f1000Y = y;
+                  f500Y = y;
                   break;
                 case 4:
-                  f2000Y = y;
+                  f1000Y = y;
                   break;
                 case 5:
+                  f2000Y = y;
+                  break;
+                case 6:
                   f4000Y = y;
+                  break;
+                case 7:
+                  f8000Y = y;
+                  break;
+                case 8:
+                  f16000Y = y;
                   break;
                 default:
                   break;
