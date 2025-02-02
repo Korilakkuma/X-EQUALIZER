@@ -55,17 +55,17 @@
     "xsound": "^4.0.4"
   },
   "devDependencies": {
-    "@types/chrome": "^0.0.287",
+    "@types/chrome": "^0.0.304",
     "@types/firefox-webext-browser": "^120.0.4",
-    "eslint": "^9.17.0",
+    "eslint": "^9.20.0",
     "husky": "4.3.8",
-    "lint-staged": "^15.2.11",
+    "lint-staged": "^15.4.3",
     "npm-run-all": "^4.1.5",
-    "prettier": "^3.4.2",
-    "stylelint": "^16.12.0",
-    "stylelint-config-recess-order": "^5.1.1",
-    "stylelint-config-standard": "^36.0.1",
-    "typescript": "^5.7.2",
-    "typescript-eslint": "^8.18.2"
+    "prettier": "^3.5.0",
+    "stylelint": "^16.14.1",
+    "stylelint-config-recess-order": "^6.0.0",
+    "stylelint-config-standard": "^37.0.0",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.23.0"
   }
 }
