@@ -52,7 +52,7 @@
   },
   "homepage": "https://github.com/Korilakkuma/X-EQUALIZER",
   "dependencies": {
-    "xsound": "^4.0.4"
+    "xsound": "^4.0.7"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.304",
