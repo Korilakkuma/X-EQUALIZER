@@ -1,7 +1,8 @@
 // @ts-check
 
-const eslint   = require('@eslint/js');
-const tseslint = require('typescript-eslint');
+const eslint         = require('@eslint/js');
+const tseslint       = require('typescript-eslint');
+const tseslintPlugin = require('@typescript-eslint/eslint-plugin');
 
 module.exports = tseslint.config(
   eslint.configs.recommended,
@@ -9,7 +10,7 @@ module.exports = tseslint.config(
   {
     files: ['src/**/*.ts'],
     plugins: {
-      '@typescript-lint': tseslint.plugin
+      '@typescript-lint': tseslintPlugin
     },
     languageOptions: {
       'parser': tseslint.parser,
