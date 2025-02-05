@@ -4,6 +4,7 @@ const eslint         = require('@eslint/js');
 const tseslint       = require('typescript-eslint');
 const tseslintPlugin = require('@typescript-eslint/eslint-plugin');
 const importPlugin   = require('eslint-plugin-import');
+const a11yPlugin     = require('eslint-plugin-jsx-a11y');
 
 module.exports = tseslint.config(
   eslint.configs.recommended,
@@ -12,7 +13,8 @@ module.exports = tseslint.config(
     files: ['src/**/*.ts'],
     plugins: {
       '@typescript-lint': tseslintPlugin,
-      'import': importPlugin
+      'import': importPlugin,
+      'jsx-a11y': a11yPlugin
     },
     languageOptions: {
       'parser': tseslint.parser,
