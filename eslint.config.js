@@ -3,6 +3,7 @@
 const eslint         = require('@eslint/js');
 const tseslint       = require('typescript-eslint');
 const tseslintPlugin = require('@typescript-eslint/eslint-plugin');
+const importPlugin   = require('eslint-plugin-import');
 
 module.exports = tseslint.config(
   eslint.configs.recommended,
@@ -10,7 +11,8 @@ module.exports = tseslint.config(
   {
     files: ['src/**/*.ts'],
     plugins: {
-      '@typescript-lint': tseslintPlugin
+      '@typescript-lint': tseslintPlugin,
+      'import': importPlugin
     },
     languageOptions: {
       'parser': tseslint.parser,
