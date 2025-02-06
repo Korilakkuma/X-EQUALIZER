@@ -6,6 +6,7 @@ const tseslintPlugin = require('@typescript-eslint/eslint-plugin');
 const importPlugin   = require('eslint-plugin-import');
 const a11yPlugin     = require('eslint-plugin-jsx-a11y');
 const jestDomPlugin  = require('eslint-plugin-jest-dom');
+const prettierPlugin = require('eslint-plugin-prettier');
 
 module.exports = tseslint.config(
   eslint.configs.recommended,
@@ -16,7 +17,8 @@ module.exports = tseslint.config(
       '@typescript-lint': tseslintPlugin,
       'import': importPlugin,
       'jsx-a11y': a11yPlugin,
-      'jest-dom': jestDomPlugin
+      'jest-dom': jestDomPlugin,
+      'prettier': prettierPlugin
     },
     languageOptions: {
       'parser': tseslint.parser,
