@@ -7,6 +7,7 @@ const importPlugin   = require('eslint-plugin-import');
 const a11yPlugin     = require('eslint-plugin-jsx-a11y');
 const jestDomPlugin  = require('eslint-plugin-jest-dom');
 const prettierPlugin = require('eslint-plugin-prettier');
+const globals        = require('globals');
 
 module.exports = tseslint.config(
   eslint.configs.recommended,
@@ -24,8 +25,12 @@ module.exports = tseslint.config(
       'parser': tseslint.parser,
       'globals': {
         'XSound': 'readonly',
-        'X': 'readonly'
-      }
+        'X': 'readonly',
+        ...globals.browser,
+        ...globals.es2021,
+        ...globals.node,
+        ...globals.jest
+      },
     },
     rules: {
       'default-param-last': 'off',
