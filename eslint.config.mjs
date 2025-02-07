@@ -1,15 +1,15 @@
 // @ts-check
 
-const eslint         = require('@eslint/js');
-const tseslint       = require('typescript-eslint');
-const tseslintPlugin = require('@typescript-eslint/eslint-plugin');
-const importPlugin   = require('eslint-plugin-import');
-const a11yPlugin     = require('eslint-plugin-jsx-a11y');
-const jestDomPlugin  = require('eslint-plugin-jest-dom');
-const prettierPlugin = require('eslint-plugin-prettier');
-const globals        = require('globals');
+import eslint from '@eslint/js';
+import tseslint from 'typescript-eslint';
+import tseslintPlugin from '@typescript-eslint/eslint-plugin';
+import importPlugin from 'eslint-plugin-import';
+import a11yPlugin from 'eslint-plugin-jsx-a11y';
+import jestDomPlugin from 'eslint-plugin-jest-dom';
+import prettierPlugin from 'eslint-plugin-prettier';
+import globals from 'globals';
 
-module.exports = tseslint.config(
+export default tseslint.config(
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   {
