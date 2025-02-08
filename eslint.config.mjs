@@ -14,13 +14,6 @@ export default tseslint.config(
   ...tseslint.configs.recommended,
   {
     files: ['src/**/*.ts'],
-    plugins: {
-      '@typescript-lint': tseslintPlugin,
-      'import': importPlugin,
-      'jsx-a11y': a11yPlugin,
-      'jest-dom': jestDomPlugin,
-      'prettier': prettierPlugin
-    },
     languageOptions: {
       'parser': tseslint.parser,
       'globals': {
@@ -31,6 +24,13 @@ export default tseslint.config(
         ...globals.node,
         ...globals.jest
       },
+    },
+    plugins: {
+      '@typescript-lint': tseslintPlugin,
+      'import': importPlugin,
+      'jsx-a11y': a11yPlugin,
+      'jest-dom': jestDomPlugin,
+      'prettier': prettierPlugin
     },
     rules: {
       'default-param-last': 'off',
