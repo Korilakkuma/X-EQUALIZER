@@ -32,6 +32,9 @@ export default tseslint.config(
       'jest-dom': jestDomPlugin,
       'prettier': prettierPlugin
     },
+    extends: [
+      ...tseslint.configs.recommended
+    ],
     rules: {
       'default-param-last': 'off',
       'indent': ['error', 2, {
