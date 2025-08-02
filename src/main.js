@@ -1,28 +1,30 @@
 (() => {
-  const FREQUENCIES = [62.5, 125, 250, 500, 1000, 2000, 4000, 8000, 16000];
+  const FREQUENCIES = [32, 62.5, 125, 250, 500, 1000, 2000, 4000, 8000, 16000];
 
+  // prettier-ignore
   const PRESETS = {
-    flat: [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    acoustic: [6, 5, 1, 3, 2, 4, 5, 4, 2],
-    bassbooster: [5, 3, 2, 1, 0, 0, 0, 0, 0],
-    bassreducer: [-5, -3, -2, -1, 0, 0, 0, 0, 0],
-    classical: [4, 3, 2, -1, -1, 0, 2, 3, 4],
-    dance: [7, 6, 0, 2, 4, 6, 5, 4, 0],
-    deep: [3, 2, 0, 3, 2, 1, -2, -4, -6],
-    electronic: [5, 1, 0, -2, 2, 1, 1, 2, 6],
-    hiphop: [5, 2, 3, -2, -2, 2, -1, 2, 3],
-    latin: [3, 0, 0, -2, -2, -2, 0, 3, 5],
-    loudness: [5, 0, 0, -2, 0, -1, -6, 6, 2],
-    lounge: [-1, 0, 2, 5, 3, 0, -2, 2, 1],
-    piano: [2, 0, 2, 3, 1, 3, 5, 3, 4],
-    pop: [-1, 0, 2, 5, 5, 2, 0, -1, -2],
-    rb: [7, 6, 2, -3, -1, 3, 3, 3, 4],
-    rock: [5, 3, 2, -1, -2, 0, 3, 4, 5],
-    treblebooster: [0, 0, 0, 0, 1, 2, 3, 5, 6],
-    treblereducer: [0, 0, 0, 0, -1, -2, -3, -5, -6],
-    vocalbooster: [-3, -3, 2, 5, 5, 3, 2, 0, -2]
-    // perfect      : [ 9,  7,  6,  5,  7,  9],
-    // explosion    : [ 9,  7,  6,  5,  7,  4],
+    flat         : [ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+    acoustic     : [ 6,  6,  5,  1,  3,  2,  4,  5,  4,  2],
+    bassbooster  : [ 6,  5,  3,  2,  1,  0,  0,  0,  0,  0],
+    bassreducer  : [-6, -5, -3, -2, -1,  0,  0,  0,  0,  0],
+    classical    : [ 5,  4,  3,  2, -1, -1,  0,  2,  3,  4],
+    dance        : [ 4,  7,  6,  0,  2,  4,  6,  5,  4,  0],
+    deep         : [ 6,  3,  2,  0,  3,  2,  1, -2, -4, -6],
+    electronic   : [ 5,  4,  1,  0, -2,  2,  1,  1,  2,  6],
+    hiphop       : [ 6,  5,  2,  3, -2, -2,  2, -1,  2,  3],
+    jazz         : [ 5,  3,  1,  2, -1, -1,  0,  1,  3,  5],
+    latin        : [ 5,  3,  0,  0, -2, -2, -2,  0,  3,  5],
+    loudness     : [ 6,  5,  0,  0, -2,  0, -1, -6,  6,  2],
+    lounge       : [-3, -1,  0,  2,  5,  3,  0, -2,  2,  1],
+    piano        : [ 3,  2,  0,  2,  3,  1,  3,  5,  3,  4],
+    pop          : [-2, -1,  0,  2,  5,  5,  2,  0, -1, -2],
+    rb           : [ 3,  7,  6,  2, -3, -1,  3,  3,  3,  4],
+    rock         : [ 6,  5,  3,  2, -1, -2,  0,  3,  4,  5],
+    treblebooster: [ 0,  0,  0,  0,  0,  1,  2,  3,  5,  6],
+    treblereducer: [ 0,  0,  0,  0,  0, -1, -2, -3, -5, -6],
+    vocalbooster : [-1, -3, -3,  1,  5,  5,  3,  1,  0, -1]
+    // perfect   : [ 0,  0,  9,  7,  6,  5,  7,  9,  0,  0],
+    // explosion : [ 0,  0,  9,  7,  6,  5,  7,  4,  0,  0],
   };
 
   const MIN_FREQUENCY = 20;
@@ -74,15 +76,16 @@
     /** @override */
     params() {
       return {
-        62: this.filters[0].gain.value,
-        125: this.filters[1].gain.value,
-        250: this.filters[2].gain.value,
-        500: this.filters[3].gain.value,
-        1000: this.filters[4].gain.value,
-        2000: this.filters[5].gain.value,
-        4000: this.filters[6].gain.value,
-        8000: this.filters[7].gain.value,
-        16000: this.filters[8].gain.value
+        32: this.filters[0].gain.value,
+        62: this.filters[1].gain.value,
+        125: this.filters[2].gain.value,
+        250: this.filters[3].gain.value,
+        500: this.filters[4].gain.value,
+        1000: this.filters[5].gain.value,
+        2000: this.filters[6].gain.value,
+        4000: this.filters[7].gain.value,
+        8000: this.filters[8].gain.value,
+        16000: this.filters[9].gain.value
       };
     }
   }
@@ -230,28 +233,31 @@
 
           const base = Math.log10(MAX_FREQUENCY / MIN_FREQUENCY);
 
-          const f62 = Math.log10(FREQUENCIES[0] / MIN_FREQUENCY) / base;
-          const f125 = Math.log10(FREQUENCIES[1] / MIN_FREQUENCY) / base;
-          const f250 = Math.log10(FREQUENCIES[2] / MIN_FREQUENCY) / base;
-          const f500 = Math.log10(FREQUENCIES[3] / MIN_FREQUENCY) / base;
-          const f1000 = Math.log10(FREQUENCIES[4] / MIN_FREQUENCY) / base;
-          const f2000 = Math.log10(FREQUENCIES[5] / MIN_FREQUENCY) / base;
-          const f4000 = Math.log10(FREQUENCIES[6] / MIN_FREQUENCY) / base;
-          const f8000 = Math.log10(FREQUENCIES[7] / MIN_FREQUENCY) / base;
-          const f16000 = Math.log10(FREQUENCIES[8] / MIN_FREQUENCY) / base;
+          const f32 = Math.log10(FREQUENCIES[0] / MIN_FREQUENCY) / base;
+          const f62 = Math.log10(FREQUENCIES[1] / MIN_FREQUENCY) / base;
+          const f125 = Math.log10(FREQUENCIES[2] / MIN_FREQUENCY) / base;
+          const f250 = Math.log10(FREQUENCIES[3] / MIN_FREQUENCY) / base;
+          const f500 = Math.log10(FREQUENCIES[4] / MIN_FREQUENCY) / base;
+          const f1000 = Math.log10(FREQUENCIES[5] / MIN_FREQUENCY) / base;
+          const f2000 = Math.log10(FREQUENCIES[6] / MIN_FREQUENCY) / base;
+          const f4000 = Math.log10(FREQUENCIES[7] / MIN_FREQUENCY) / base;
+          const f8000 = Math.log10(FREQUENCIES[8] / MIN_FREQUENCY) / base;
+          const f16000 = Math.log10(FREQUENCIES[9] / MIN_FREQUENCY) / base;
 
           const widthOfRect = window.innerWidth / (FREQUENCIES.length + 1);
 
-          const f62X = Math.trunc(1 * widthOfRect);
-          const f125X = Math.trunc(2 * widthOfRect);
-          const f250X = Math.trunc(3 * widthOfRect);
-          const f500X = Math.trunc(4 * widthOfRect);
-          const f1000X = Math.trunc(5 * widthOfRect);
-          const f2000X = Math.trunc(6 * widthOfRect);
-          const f4000X = Math.trunc(7 * widthOfRect);
-          const f8000X = Math.trunc(8 * widthOfRect);
-          const f16000X = Math.trunc(9 * widthOfRect);
+          const f32X = Math.trunc(1 * widthOfRect);
+          const f62X = Math.trunc(2 * widthOfRect);
+          const f125X = Math.trunc(3 * widthOfRect);
+          const f250X = Math.trunc(4 * widthOfRect);
+          const f500X = Math.trunc(5 * widthOfRect);
+          const f1000X = Math.trunc(6 * widthOfRect);
+          const f2000X = Math.trunc(7 * widthOfRect);
+          const f4000X = Math.trunc(8 * widthOfRect);
+          const f8000X = Math.trunc(9 * widthOfRect);
+          const f16000X = Math.trunc(10 * widthOfRect);
 
+          let f32Y = middle;
           let f62Y = middle;
           let f125Y = middle;
           let f250Y = middle;
@@ -287,13 +293,31 @@
             context.clearRect(0, 0, w, h);
 
             // Draw controllers
-            // 62.5 Hz
-            knob.drawLine(0, middle, f62X, f62Y);
-            knob.drawCircle(f62X, f62Y, false);
+            // 32 Hz
+            knob.drawLine(0, middle, f32X, f32Y);
+            knob.drawCircle(f32X, f32Y, false);
 
             if (context.isPointInPath(x, y)) {
               controllerCanvas.classList.add(className);
               knob.drawCross(`${FREQUENCIES[0]} Hz ${Math.trunc(dB)} dB`, x, y);
+
+              if (isMouseDown) {
+                knob.drawLine(0, middle, f32X, y);
+                knob.drawCircle(f32X, y, true);
+
+                f32Y = y;
+
+                equalizer.param(FREQUENCIES[1], 2 * dB);
+              }
+            }
+
+            // 62.5 Hz
+            knob.drawLine(f32X, f32Y, f62X, f62Y);
+            knob.drawCircle(f62X, f62Y, false);
+
+            if (context.isPointInPath(x, y)) {
+              controllerCanvas.classList.add(className);
+              knob.drawCross(`${FREQUENCIES[1]} Hz ${Math.trunc(dB)} dB`, x, y);
 
               if (isMouseDown) {
                 knob.drawLine(0, middle, f62X, y);
@@ -311,7 +335,7 @@
 
             if (context.isPointInPath(x, y)) {
               controllerCanvas.classList.add(className);
-              knob.drawCross(`${FREQUENCIES[1]} Hz ${Math.trunc(dB)} dB`, x, y);
+              knob.drawCross(`${FREQUENCIES[2]} Hz ${Math.trunc(dB)} dB`, x, y);
 
               if (isMouseDown) {
                 knob.drawLine(f62X, f62Y, f125X, y);
@@ -329,7 +353,7 @@
 
             if (context.isPointInPath(x, y)) {
               controllerCanvas.classList.add(className);
-              knob.drawCross(`${FREQUENCIES[2]} Hz ${Math.trunc(dB)} dB`, x, y);
+              knob.drawCross(`${FREQUENCIES[3]} Hz ${Math.trunc(dB)} dB`, x, y);
 
               if (isMouseDown) {
                 knob.drawLine(f125X, f125Y, f250X, y);
@@ -347,7 +371,7 @@
 
             if (context.isPointInPath(x, y)) {
               controllerCanvas.classList.add(className);
-              knob.drawCross(`${FREQUENCIES[3]} Hz ${Math.trunc(dB)} dB`, x, y);
+              knob.drawCross(`${FREQUENCIES[4]} Hz ${Math.trunc(dB)} dB`, x, y);
 
               if (isMouseDown) {
                 knob.drawLine(f250X, f250Y, f500X, y);
@@ -365,7 +389,7 @@
 
             if (context.isPointInPath(x, y)) {
               controllerCanvas.classList.add(className);
-              knob.drawCross(`${FREQUENCIES[4]} Hz ${Math.trunc(dB)} dB`, x, y);
+              knob.drawCross(`${FREQUENCIES[5]} Hz ${Math.trunc(dB)} dB`, x, y);
 
               if (isMouseDown) {
                 knob.drawLine(f500X, f500Y, f1000X, y);
@@ -383,7 +407,7 @@
 
             if (context.isPointInPath(x, y)) {
               controllerCanvas.classList.add(className);
-              knob.drawCross(`${FREQUENCIES[5]} Hz ${Math.trunc(dB)} dB`, x, y);
+              knob.drawCross(`${FREQUENCIES[6]} Hz ${Math.trunc(dB)} dB`, x, y);
 
               if (isMouseDown) {
                 knob.drawLine(f1000X, f1000Y, f2000X, y);
@@ -401,7 +425,7 @@
 
             if (context.isPointInPath(x, y)) {
               controllerCanvas.classList.add(className);
-              knob.drawCross(`${FREQUENCIES[6]} Hz ${Math.trunc(dB)} dB`, x, y);
+              knob.drawCross(`${FREQUENCIES[7]} Hz ${Math.trunc(dB)} dB`, x, y);
 
               if (isMouseDown) {
                 knob.drawLine(f2000X, f2000Y, f4000X, y);
@@ -419,7 +443,7 @@
 
             if (context.isPointInPath(x, y)) {
               controllerCanvas.classList.add(className);
-              knob.drawCross(`${FREQUENCIES[7]} Hz ${Math.trunc(dB)} dB`, x, y);
+              knob.drawCross(`${FREQUENCIES[8]} Hz ${Math.trunc(dB)} dB`, x, y);
 
               if (isMouseDown) {
                 knob.drawLine(f4000X, f4000Y, f8000X, y);
@@ -437,7 +461,7 @@
 
             if (context.isPointInPath(x, y)) {
               controllerCanvas.classList.add(className);
-              knob.drawCross(`${FREQUENCIES[8]} Hz ${Math.trunc(dB)} dB`, x, y);
+              knob.drawCross(`${FREQUENCIES[9]} Hz ${Math.trunc(dB)} dB`, x, y);
 
               if (isMouseDown) {
                 knob.drawLine(f8000X, f8000Y, f16000X, y);
@@ -456,7 +480,8 @@
             isMouseDown = false;
           };
 
-          knob.drawLine(0, f62Y, f125X, f125Y);
+          knob.drawLine(0, f32Y, f62X, f62Y);
+          knob.drawLine(f62X, f62Y, f125X, f125Y);
           knob.drawLine(f125X, f125Y, f250X, f250Y);
           knob.drawLine(f250X, f250Y, f500X, f500Y);
           knob.drawLine(f500X, f500Y, f1000X, f1000Y);
@@ -465,6 +490,7 @@
           knob.drawLine(f4000X, f4000Y, f8000X, f8000Y);
           knob.drawLine(f16000X, middle, window.innerWidth, middle);
 
+          knob.drawCircle(f32X, f32Y, false);
           knob.drawCircle(f62X, f62Y, false);
           knob.drawCircle(f125X, f125Y, false);
           knob.drawCircle(f250X, f250Y, false);
@@ -522,30 +548,33 @@
 
               switch (i) {
                 case 0:
-                  f62Y = y;
+                  f32Y = y;
                   break;
                 case 1:
-                  f125Y = y;
+                  f62Y = y;
                   break;
                 case 2:
-                  f250Y = y;
+                  f125Y = y;
                   break;
                 case 3:
-                  f500Y = y;
+                  f250Y = y;
                   break;
                 case 4:
-                  f1000Y = y;
+                  f500Y = y;
                   break;
                 case 5:
-                  f2000Y = y;
+                  f1000Y = y;
                   break;
                 case 6:
-                  f4000Y = y;
+                  f2000Y = y;
                   break;
                 case 7:
-                  f8000Y = y;
+                  f4000Y = y;
                   break;
                 case 8:
+                  f8000Y = y;
+                  break;
+                case 9:
                   f16000Y = y;
                   break;
                 default:
