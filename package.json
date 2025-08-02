@@ -16,7 +16,7 @@
     "lint": "run-p eslint stylelint",
     "fix": "run-p fix:eslint fix:stylelint",
     "type": "tsc --noEmit",
-    "build": "npm run clean && tsc && cp src/main.js dist/main.js && cp src/styles/app.css dist/app.css",
+    "build": "npm run clean && mkdir dist && cp src/main.js dist/main.js && cp src/styles/app.css dist/app.css",
     "test": "echo 'No test cases.'"
   },
   "husky": {
