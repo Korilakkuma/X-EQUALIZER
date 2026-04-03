@@ -1,42 +1,26 @@
-// @ts-check
-
-import eslint from '@eslint/js';
-import tseslint from 'typescript-eslint';
-import tseslintPlugin from '@typescript-eslint/eslint-plugin';
-import importPlugin from 'eslint-plugin-import';
-import a11yPlugin from 'eslint-plugin-jsx-a11y';
-import jestDomPlugin from 'eslint-plugin-jest-dom';
-import prettierPlugin from 'eslint-plugin-prettier';
+import js from '@eslint/js';
 import globals from 'globals';
+import tseslint from 'typescript-eslint';
+import { defineConfig } from 'eslint/config';
 
-export default tseslint.config(
-  eslint.configs.recommended,
-  ...tseslint.configs.recommended,
+export default defineConfig([
   {
-    files: ['src/**/*.ts'],
-    languageOptions: {
-      'parser': tseslint.parser,
-      'globals': {
-        'XSound': 'readonly',
-        'X': 'readonly',
-        ...globals.browser,
-        ...globals.es2021,
-        ...globals.node,
-        ...globals.jest
-      },
-    },
+    files: [
+      '**/*.{js,mjs,cjs,ts,mts,cts}'
+    ],
     plugins: {
-      '@typescript-lint': tseslintPlugin,
-      'import': importPlugin,
-      'jsx-a11y': a11yPlugin,
-      'jest-dom': jestDomPlugin,
-      'prettier': prettierPlugin
+      js
     },
     extends: [
-      ...tseslint.configs.recommended
+      'js/recommended'
     ],
+    languageOptions: {
+      globals: globals.browser
+    },
     rules: {
       'default-param-last': 'off',
+      'dot-notation': 'error',
+      'eqeqeq': 'error',
       'indent': ['error', 2, {
         'ignoredNodes': ['TemplateLiteral'],
         'SwitchCase': 1
@@ -49,6 +33,9 @@ export default tseslint.config(
       'no-multi-spaces': 'off',
       'no-unneeded-ternary': 'off',
       'no-unused-vars': ['off', { 'vars': 'all', 'args': 'after-used' }],
+      'no-use-before-define': 'error',
+      'no-useless-assignment': 'off',
+      'no-useless-constructor': 'warn',
       'no-var': 'warn',
       'prefer-promise-reject-errors': 'off',
       'quote-props': 'off',
@@ -61,15 +48,8 @@ export default tseslint.config(
       '@typescript-eslint/consistent-type-imports': 'error',
       '@typescript-eslint/no-empty-function': 'off',
       '@typescript-eslint/no-unused-vars': ['error', { 'argsIgnorePattern': '^_' }],
-      '@typescript-eslint/no-use-before-define': 'error',
-    },
-    settings: {
-      'import/resolver': {
-        'typescript': {}
-      },
-      'react': {
-        'version': "detect"
-      }
+      '@typescript-eslint/no-use-before-define': 'error'
     }
-  }
-);
+  },
+  tseslint.configs.recommended
+]);
