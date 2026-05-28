@@ -16,7 +16,7 @@
     "lint": "run-p eslint stylelint",
     "fix": "run-p fix:eslint fix:stylelint",
     "type": "tsc --noEmit",
-    "build": "npm run clean && mkdir dist && cp src/main.js dist/main.js && cp src/styles/app.css dist/app.css",
+    "build": "npm run clean && webpack && cp src/styles/app.css dist/app.css",
     "test": "echo 'No test cases.'"
   },
   "husky": {
@@ -69,7 +69,11 @@
     "stylelint": "^17.11.1",
     "stylelint-config-recess-order": "^7.7.0",
     "stylelint-config-standard": "^40.0.0",
+    "terser-webpack-plugin": "^5.6.1",
+    "ts-loader": "^9.5.7",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.59.4"
+    "typescript-eslint": "^8.59.4",
+    "webpack": "^5.107.2",
+    "webpack-cli": "^7.0.3"
   }
 }
