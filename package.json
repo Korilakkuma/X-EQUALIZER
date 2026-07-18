@@ -52,7 +52,7 @@
   },
   "homepage": "https://github.com/Korilakkuma/X-EQUALIZER",
   "dependencies": {
-    "xsound": "^4.3.4"
+    "xsound": "^4.3.5"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
