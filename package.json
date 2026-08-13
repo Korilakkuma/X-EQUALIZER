@@ -5,6 +5,9 @@
     "node": ">=22.0.0 <=24.19.x"
   },
   "description": "Chrome extension and Firefox addon for Graphic Equalizer",
+  "allowScripts": {
+    "husky": true
+  },
   "scripts": {
     "clean": "rm -rf dist",
     "eslint": "eslint 'src/**/*.ts'",
